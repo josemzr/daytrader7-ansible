@@ -1,0 +1,6 @@
+daytrader_src: 'https://github.com/WASdev/sample.daytrader7.git'
+maven_src: 'http://supergsego.com/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz'
+exec_dir: "/opt/daytrader"
+packages_debian: ['git', 'default-jdk', 'maven']
+packages_rhel: ['git', 'wget', 'java-1.7.0-openjdk-devel']
+

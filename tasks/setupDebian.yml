@@ -1,0 +1,49 @@
+---
+- name: debian/ubuntu installs required packages
+  apt:
+    name: "{{ packages_debian }}" 
+    state: installed 
+    update_cache: true
+
+- name: debian/ubuntu clone daytrader github repo
+  git: 
+    repo: "{{ daytrader_src }}"
+    dest: "{{ exec_dir }}/sample.daytrader7"
+    clone: yes
+    force: yes
+
+- name: debian/ubuntu create wlp folder
+  file:
+    path: "{{ exec_dir }}/wlp"
+    state: directory
+
+- name: debian/ubuntu copy wlp files 
+  synchronize: 
+    src: "{{ role_path }}/files/wlp" 
+    dest: "{{ exec_dir }}" 
+    rsync_opts:
+      - "--chmod=F744"
+
+- name: debian/ubuntu install daytrader with maven
+  shell: cd "{{ exec_dir }}/sample.daytrader7" && mvn install
+
+- name: debian/ubuntu create daytrader service
+  synchronize: 
+    src: "{{ role_path }}/files/daytrader.service" 
+    dest: "/etc/systemd/system" 
+    rsync_opts:
+      - "--chmod=F664"
+
+- name: debian/ubuntu copy daytrader execution script
+  synchronize: 
+    src: "{{ role_path }}/files/daytrader-wlp.sh" 
+    dest: "{{ exec_dir }}"
+    rsync_opts:
+      - "--chmod=F744"
+
+- name: debian/ubuntu enable daytrader service with systemd
+  systemd:
+    name: daytrader
+    enabled: yes
+    daemon_reload: yes
+    state: started

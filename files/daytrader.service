@@ -1,0 +1,10 @@
+[Unit]
+Description=daytrader
+
+[Service]
+ExecStart=/opt/daytrader/daytrader-wlp.sh
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
+

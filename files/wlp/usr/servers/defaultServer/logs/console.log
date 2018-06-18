@@ -1,0 +1,11 @@
+Server defaultServer created.
+Launching defaultServer (WebSphere Application Server 17.0.0.3/wlp-1.0.18.cl170320170927-1854) on OpenJDK 64-Bit Server VM, version 1.7.0_151-mockbuild_2017_08_02_08_29-b00 (en_US)
+[AUDIT   ] CWWKE0001I: The server defaultServer has been launched.
+[AUDIT   ] CWWKE0100I: This product is licensed for development, and limited production use. The full license terms can be viewed here: https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/license/base_ilan/ilan/17.0.0.3/lafiles/en.html
+[AUDIT   ] CWWKZ0058I: Monitoring dropins for applications. 
+[AUDIT   ] CWWKS4104A: LTPA keys created in 0.870 seconds. LTPA key file: /home/ubuntu/wlp/usr/servers/defaultServer/resources/security/ltpa.keys
+[AUDIT   ] CWWKF0012I: The server installed the following features: [webProfile-7.0, json-1.0, jaxrs-2.0, appSecurity-2.0, jpa-2.1, cdi-1.2, jaxrsClient-2.0, distributedMap-1.0, websocket-1.1, el-3.0, ssl-1.0, jdbc-4.1, beanValidation-1.1, managedBeans-1.0, jpaContainer-2.1, servlet-3.1, jsf-2.2, jsp-2.3, jndi-1.0, jsonp-1.0, ejbLite-3.2].
+[AUDIT   ] CWWKF0011I: The server defaultServer is ready to run a smarter planet.
+[AUDIT   ] CWWKE0085I: The server defaultServer is stopping because the JVM is exiting.
+[AUDIT   ] CWWKE1100I: Waiting for up to 30 seconds for the server to quiesce.
+[AUDIT   ] CWWKE0036I: The server defaultServer stopped after 3 minutes, 18.077 seconds.

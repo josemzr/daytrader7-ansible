@@ -1,0 +1,64 @@
+---
+- name: rhel/centos install required dependencies
+  yum:
+    name: "{{ packages_rhel }}" 
+    state: present 
+    update_cache: true
+
+- name: rhel/centos clone daytrader github repo
+  git: 
+    repo: "{{ daytrader_src}}"
+    dest: "{{ exec_dir }}/sample.daytrader7"
+    clone: yes
+    force: yes
+
+- name: rhel/centos create wlp folder
+  file:
+    path: "{{ exec_dir }}/wlp"
+    state: directory
+
+- name: rhel/centos copy wlp files 
+  synchronize: 
+    src: "{{ role_path }}/files/wlp" 
+    dest: "{{ exec_dir }}" 
+    rsync_opts:
+      - "--chmod=F744"
+
+- name: rhel/centos download maven
+  get_url:
+    url: "{{ maven_src }}"
+    dest: "{{ exec_dir }}"
+
+- name: rhel/centos untar maven
+  unarchive:
+    src: "{{ exec_dir }}/apache-maven-3.5.2-bin.tar.gz"
+    dest: "{{ exec_dir }}"
+    remote_src: yes
+
+- name: rhel/centos install daytrader with maven
+  shell: cd "{{ exec_dir }}/sample.daytrader7" && "{{ exec_dir }}/apache-maven-3.5.2/bin/mvn" install
+  environment:
+    M2_HOME: "{{ exec_dir }}/apache-maven-3.5.2"
+    M2: "{{ exec_dir }}/apache-maven-3.5.2/bin"
+    JAVA_HOME: /usr/lib/jvm/java-1.7.0-openjdk
+
+- name: rhel/centos create daytrader service
+  synchronize: 
+    src: "{{ role_path }}/files/daytrader.service" 
+    dest: "/etc/systemd/system" 
+    rsync_opts:
+      - "--chmod=F664"
+
+- name: rhel/centos copy daytrader execution script
+  synchronize: 
+    src: "{{ role_path }}/files/daytrader-wlp.sh" 
+    dest: "{{ exec_dir }}"
+    rsync_opts:
+      - "--chmod=F744"
+
+- name: rhel/centos enable daytrader service with systemd
+  systemd:
+    name: daytrader
+    enabled: yes
+    daemon_reload: yes
+    state: started
